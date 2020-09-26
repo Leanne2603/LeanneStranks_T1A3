@@ -3,7 +3,7 @@ require 'csv'
 require 'json'
 require 'tty-prompt'
 require_relative 'classes/userclass'
-require_relative 'classes/quizquestions'
+require_relative 'classes/quizquestionsclass'
 prompt = TTY::Prompt.new
 
 
@@ -45,8 +45,8 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                     newq.choice 'Science'
                     newq.choice 'History'
                 end
+                puts "In the next steps, you will be asked to enter your quiz question followed by 4 possible answers. You will then be asked to advise which is the correct answer"
                 if input_new_quiz_questions == "English"
-                        puts "In the next steps, you will be asked to enter your quiz question followed by 4 possible answers. You will then be asked to advise which is the correct answer"
                         puts "Enter your new quiz question"
                         englishnewquizq = gets.chomp
                         puts "Enter possible answer 1:"
@@ -61,12 +61,38 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                         engcorrectanswer = gets.chomp
                         new_english_quiz_question = EnglishQuizQuestion.new(englishnewquizq, englishans1, englishans2, englishans3, englishans4, engcorrectanswer)
                         new_english_quiz_question.write_to_file_english
-                        puts Rainbow("Your question has now been added to the list").green
-                elsif input_new_quiz_questions == "Science"
-                        puts "Yay"
-                elsif input_new_quiz_questions == "History"
-                        puts "Yes"
-                end
+                    elsif input_new_quiz_questions == "Science"
+                        puts "Enter your new quiz question"
+                        sciencenewquizq = gets.chomp
+                        puts "Enter possible answer 1:"
+                        scienceans1 = gets.chomp
+                        puts "Enter possible answer 2:"
+                        scienceans2 = gets.chomp
+                        puts "Enter possible answer 3:"
+                        scienceans3 = gets.chomp
+                        puts "Enter possible answer 4:"
+                        scienceans4 = gets.chomp
+                        puts "Out of the four answers which were provided, please advise the correct answer:"
+                        scicorrectanswer = gets.chomp
+                        new_science_quiz_question = ScienceQuizQuestion.new(sciencenewquizq, scienceans1, scienceans2, scienceans3, scienceans4, scicorrectanswer)
+                        new_science_quiz_question.write_to_file_science
+                    elsif input_new_quiz_questions == "History"
+                        puts "Enter your new quiz question"
+                        historynewquizq = gets.chomp
+                        puts "Enter possible answer 1:"
+                        historyans1 = gets.chomp
+                        puts "Enter possible answer 2:"
+                        historyans2 = gets.chomp
+                        puts "Enter possible answer 3:"
+                        historyans3 = gets.chomp
+                        puts "Enter possible answer 4:"
+                        historyans4 = gets.chomp
+                        puts "Out of the four answers which were provided, please advise the correct answer:"
+                        histcorrectanswer = gets.chomp
+                        new_history_quiz_question = HistoryQuizQuestion.new(historynewquizq, historyans1, historyans2, historyans3, historyans4, histcorrectanswer)
+                        new_history_quiz_question.write_to_file_history
+                    end
+                    puts Rainbow("Your question has now been added to the list!").yellow
             else superuser_menu == 'Exit Program'
                 puts "Thank you for using the Quiz Bites app!"
                 exit
