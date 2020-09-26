@@ -12,12 +12,16 @@ pastel = Pastel.new
 
 # Login authentication
 puts pastel.bright_magenta(font.write("Welcome to Quiz Bites"))
-# puts "Welcome to Quiz Bites!"
 puts Rainbow("A place where you can test your skills and expand your mind with multiple choice quizzes!!").cyan
 puts "Please enter your username:"
 input_username = gets.chomp
 input_password = prompt.mask("Please enter your password:")
 list_of_users = JSON.parse(File.read("src/users.json"), symbolize_names: true)
+list_of_users.each do |user|
+    name_of_user = user[:username]
+    password_of_user = user[:password]
+    access_level_of_user = user[:accesslevel]
+end
 if list_of_users[0][:username] == input_username && list_of_users[0][:password] == input_password
     if list_of_users[0][:accesslevel] == "Facilitator"
         loop do
@@ -42,7 +46,9 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                 # Need to be able to write to file!    
                 end
             elsif superuser_menu == "View Existing Users"
-                puts list_of_users
+                list_of_users.each do |details|
+                    puts Rainbow("Fullname: #{details[:fullname].ljust(40, ".")} Username: #{details[:username].ljust(35, ".")} Password: #{details[:password].ljust(30, ".")} Access Level: #{details[:accesslevel]}").blue
+                end
             elsif superuser_menu == "Create New Questions"
                 input_new_quiz_questions = prompt.select("Please select which subject you wish to add to:") do |newq|
                     newq.choice 'English'
