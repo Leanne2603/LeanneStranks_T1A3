@@ -2,7 +2,8 @@ require 'rainbow'
 require 'csv'
 require 'json'
 require 'tty-prompt'
-require_relative 'userclass'
+require_relative 'classes/userclass'
+require_relative 'classes/quizquestions'
 prompt = TTY::Prompt.new
 
 
@@ -24,7 +25,7 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
             superusermenu.choice 'View Existing Quizzes'
             superusermenu.choice 'Exit Program'
             end
-            if superuser_menu == 'Create New User'
+            if superuser_menu == "Create New User"
                 puts "What is the new user's full name?"
                 input_new_user = gets.chomp
                 puts "What username would you like to assign to this user?"
@@ -44,6 +45,28 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                     newq.choice 'Science'
                     newq.choice 'History'
                 end
+                if input_new_quiz_questions == "English"
+                        puts "In the next steps, you will be asked to enter your quiz question followed by 4 possible answers. You will then be asked to advise which is the correct answer"
+                        puts "Enter your new quiz question"
+                        englishnewquizq = gets.chomp
+                        puts "Enter possible answer 1:"
+                        englishans1 = gets.chomp
+                        puts "Enter possible answer 2:"
+                        englishans2 = gets.chomp
+                        puts "Enter possible answer 3:"
+                        englishans3 = gets.chomp
+                        puts "Enter possible answer 4:"
+                        englishans4 = gets.chomp
+                        puts "Out of the four answers which were provided, please advise the correct answer:"
+                        engcorrectanswer = gets.chomp
+                        new_english_quiz_question = EnglishQuizQuestion.new(englishnewquizq, englishans1, englishans2, englishans3, englishans4, engcorrectanswer)
+                        new_english_quiz_question.write_to_file_english
+                        puts Rainbow("Your question has now been added to the list").green
+                elsif input_new_quiz_questions == "Science"
+                        puts "Yay"
+                elsif input_new_quiz_questions == "History"
+                        puts "Yes"
+                end
             else superuser_menu == 'Exit Program'
                 puts "Thank you for using the Quiz Bites app!"
                 exit
@@ -61,6 +84,6 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
         end
     end
 else 
-    puts "Invalid Username and/or Password"
+    puts Rainbow("Invalid Username and/or Password").red
 end
     
