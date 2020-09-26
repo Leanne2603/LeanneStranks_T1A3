@@ -2,7 +2,7 @@
     {
         "fullname": "Leanne S",
         "username": "Leanne",
-        "password": "Password123",
-        "issuperuser": true
+        "password": "1",
+        "accesslevel": "Facilitator"
     }
 ]
