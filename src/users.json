@@ -3,6 +3,6 @@
         "fullname": "Leanne S",
         "username": "Leanne",
         "password": "Password123",
-        "issuperuser": false
+        "issuperuser": true
     }
 ]
