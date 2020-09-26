@@ -2,14 +2,18 @@ require 'rainbow'
 require 'csv'
 require 'json'
 require 'tty-prompt'
+require 'tty-font'
 require_relative 'classes/userclass'
 require_relative 'classes/quizquestionsclass'
 prompt = TTY::Prompt.new
+font = TTY::Font.new
+pastel = Pastel.new
 
 
 # Login authentication
-puts "Welcome to Quiz Bites!"
-puts "A place where you can test your skills and expand your mind with multiple choice quizzes"
+puts pastel.bright_magenta(font.write("Welcome to Quiz Bites"))
+# puts "Welcome to Quiz Bites!"
+puts Rainbow("A place where you can test your skills and expand your mind with multiple choice quizzes!!").cyan
 puts "Please enter your username:"
 input_username = gets.chomp
 input_password = prompt.mask("Please enter your password:")
@@ -94,7 +98,7 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                     end
                     puts Rainbow("Your question has now been added to the list!").yellow
             else superuser_menu == 'Exit Program'
-                puts "Thank you for using the Quiz Bites app!"
+                puts pastel.cyan(font.write("Thank you!"))
                 exit
             end
         end
