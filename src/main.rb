@@ -3,6 +3,7 @@ require 'csv'
 require 'json'
 require 'tty-prompt'
 require 'tty-font'
+require 'smarter_csv'
 require_relative 'classes/userclass'
 require_relative 'classes/quizquestionsclass'
 require_relative 'classes/superuser'
@@ -17,7 +18,7 @@ puts Rainbow("A place where you can test your skills and expand your mind with m
 puts "Please enter your username:"
 input_username = gets.chomp.capitalize
 input_password = prompt.mask("Please enter your password:")
-list_of_users = JSON.parse(File.read("src/users.json"), symbolize_names: true)
+list_of_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
 if list_of_users[0][:username] == input_username && list_of_users[0][:password] == input_password
     if list_of_users[0][:accesslevel] == "Facilitator"
         loop do
@@ -25,21 +26,22 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
         superuser_menu = prompt.select("Please select what you would like to do from the following options:") do |superusermenu|
             superusermenu.choice 'Create New User'
             superusermenu.choice 'View Existing Users'
-            superusermenu.choice 'Create New Questions'
-            superusermenu.choice 'View Existing Quizzes'
-            superusermenu.choice 'Exit Program'
+            superusermenu.choice 'Create New Questions' 
+            superusermenu.choice 'View Existing Quizzes' 
+            superusermenu.choice 'Exit Program' 
             end
             if superuser_menu == "Create New User"
                 puts "What is the new user's full name?"
                 input_new_user = gets.chomp
                 puts "What username would you like to assign to this user?"
-                input_new_username = gets.chomp
+                input_new_username = gets.chomp.capitalize
                 puts "Assign a password for this user:"
                 input_new_password = gets.chomp
                 input_is_newuser_superuser = prompt.select("Is this new user a Facilitator or Student?") do |accesslevel|
                 accesslevel.choice 'Facilitator'
-                accesslevel.choice 'Student' 
-                # Need to be able to write to file!    
+                accesslevel.choice 'Student'
+                File.write('json/users.json', JSON.dump())
+                # Need to be able to write to json file!    
                 end
             elsif superuser_menu == "View Existing Users"
                 puts Rainbow("The following is a list of the current users:").cyan
@@ -67,11 +69,11 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                     view.choice 'History'
                 end
                     if existing_quizzes == "English"
-                        CSV.foreach("english_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
+                        CSV.foreach("csv/english_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
                     elsif existing_quizzes == "Science"
-                        CSV.foreach("science_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
+                        CSV.foreach("csv/science_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
                     elsif existing_quizzes == "History"
-                        CSV.foreach("history_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
+                        CSV.foreach("csv/history_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
                     end
             else superuser_menu == 'Exit Program'
                 puts pastel.cyan(font.write("Thank you!"))
@@ -80,15 +82,25 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
         end
     elsif list_of_users[0][:accesslevel] != "Facilitator"
     # Menu for student
-    loop do
-    student_menu = prompt.select("Please select what subject you would like to be quizzed on from the following options:") do |studentmenu|
-        studentmenu.choice 'English'
-        studentmenu.choice 'Science'
-        studentmenu.choice 'History'
-        studentmenu.choice 'Exit Program'
+        loop do
+        student_menu = prompt.select("Please select what subject you would like to be quizzed on from the following options:") do |studentmenu|
+            studentmenu.choice 'English'
+            studentmenu.choice 'Science'
+            studentmenu.choice 'History'
+            studentmenu.choice 'Exit Program'
+            end
+            if student_menu == 'English'
+                englishquiz = SmarterCSV.process('csv/english_quiz_questions.csv')
+                englishquiz.each { |key, value| puts "#{key} #{value.to_s}" }
+            elsif student_menu == 'Science'
+                sciencequiz = SmarterCSV.process('csv/science_quiz_questions.csv')
+            elsif student_menu == 'History'
+                historyquiz = SmarterCSV.process('csv/history_quiz_questions.csv')
+            else student_menu == 'Exit Program'
+                exit
+            end
         end
         end
-    end
 else 
     puts Rainbow("Invalid Username and/or Password").red
 end

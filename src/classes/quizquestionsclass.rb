@@ -40,18 +40,18 @@ end
 class EnglishQuizQuestion < NewQuizQuestion
     
     def write_to_file_english
-        File.write("english_quiz_questions.csv", "#{question},#{answer1},#{answer2},#{answer3},#{answer4},#{correctanswer}\n", mode: "a")
+        File.write("csv/english_quiz_questions.csv", "#{question},#{answer1},#{answer2},#{answer3},#{answer4},#{correctanswer}\n", mode: "a")
     end
 end
 
 class ScienceQuizQuestion < NewQuizQuestion
     def write_to_file_science
-        File.write("science_quiz_questions.csv", "#{question},#{answer1},#{answer2},#{answer3},#{answer4},#{correctanswer}\n", mode: "a")
+        File.write("csv/science_quiz_questions.csv", "#{question},#{answer1},#{answer2},#{answer3},#{answer4},#{correctanswer}\n", mode: "a")
     end
 end
 
 class HistoryQuizQuestion < NewQuizQuestion
     def write_to_file_history
-        File.write("history_quiz_questions.csv", "#{question},#{answer1},#{answer2},#{answer3},#{answer4},#{correctanswer}\n", mode: "a")
+        File.write("csv/history_quiz_questions.csv", "#{question},#{answer1},#{answer2},#{answer3},#{answer4},#{correctanswer}\n", mode: "a")
     end
 end
