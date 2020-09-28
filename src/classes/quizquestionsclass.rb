@@ -9,7 +9,7 @@ class NewQuizQuestion
         @correctanswer = correctanswer
     end
 
-    def self.createnewquestion(subject)
+    def createnewquestion(subject)
         puts "Enter your new quiz question"
         @question = gets.chomp
         puts "Enter possible answer 1:"

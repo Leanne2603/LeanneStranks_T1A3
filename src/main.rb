@@ -37,7 +37,6 @@ if user[:password] == input_password
                 input_new_username = gets.chomp.capitalize.strip
                 puts "Assign a password for this user:"
                 input_new_password = gets.chomp.strip
-                prompt = TTY::Prompt.new
                 input_is_newuser_superuser = prompt.select("Is this new user a Facilitator or Student?") do |accesslevel|
                     accesslevel.choice 'Facilitator'
                     accesslevel.choice 'Student'
@@ -70,11 +69,14 @@ if user[:password] == input_password
                 end
                 puts "In the next steps, you will be asked to enter your quiz question followed by 4 possible answers. You will then be asked to advise which is the correct answer"
                 if input_new_quiz_questions == "English"
-                    new_english_quiz_question = EnglishQuizQuestion.createnewquestion("English")
+                    new_english_quiz_question = EnglishQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)
+                    new_english_quiz_question.createnewquestion("English")
                 elsif input_new_quiz_questions == "Science"
-                    new_science_quiz_question = NewQuizQuestion.createnewquestion("Science")
-                elsif input_new_quiz_questions == "History"
-                    new_history_quiz_question = NewQuizQuestion.createnewquestion("History")
+                    new_science_quiz_question = NewQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)
+                    new_science_quiz_question.createnewquestion("Science")
+                else 
+                    new_history_quiz_question = NewQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)
+                    new_history_quiz_question.createnewquestion("History")
                 end
             elsif superuser_menu == "View Existing Quizzes"
                 existing_quizzes = prompt.select("Select which subject you would like to view from the following:") do |view|
@@ -83,11 +85,11 @@ if user[:password] == input_password
                     view.choice 'History'
                 end
                     if existing_quizzes == "English"
-                        CSV.foreach("csv/english_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
+                        CSV.foreach("csv/english_quiz_questions.csv", headers: true) {|row| puts "Question: #{row['question']}\n a: #{row['answer1']}\n b: #{row['answer2']}\n c: #{row['answer3']}\n d: #{row['answer4']}\n Correct Answer: #{row['correctanswer']}"}
                     elsif existing_quizzes == "Science"
-                        CSV.foreach("csv/science_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
-                    elsif existing_quizzes == "History"
-                        CSV.foreach("csv/history_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
+                        CSV.foreach("csv/science_quiz_questions.csv", headers: true) {|row| puts "Question: #{row['question']}\n a: #{row['answer1']}\n b: #{row['answer2']}\n c: #{row['answer3']}\n d: #{row['answer4']}\n Correct Answer: #{row['correctanswer']}"}
+                    else 
+                        CSV.foreach("csv/history_quiz_questions.csv", headers: true) {|row| puts "Question: #{row['question']}\n a: #{row['answer1']}\n b: #{row['answer2']}\n c: #{row['answer3']}\n d: #{row['answer4']}\n Correct Answer: #{row['correctanswer']}"}
                     end
             else superuser_menu == 'Exit Program'
                 puts pastel.cyan(font.write("Thank you!"))
@@ -118,5 +120,6 @@ if user[:password] == input_password
 else 
     puts Rainbow("Invalid Username and/or Password").red
 end
+
     
 
