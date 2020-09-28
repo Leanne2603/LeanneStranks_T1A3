@@ -11,16 +11,16 @@ prompt = TTY::Prompt.new
 font = TTY::Font.new
 pastel = Pastel.new
 
-
 # Login authentication
 puts pastel.bright_magenta(font.write("Welcome to Quiz Bites"))
 puts Rainbow("A place where you can test your skills and expand your mind with multiple choice quizzes!!").cyan
 puts "Please enter your username:"
-input_username = gets.chomp.capitalize
-input_password = prompt.mask("Please enter your password:")
+input_username = gets.chomp.capitalize.strip
+input_password = prompt.mask("Please enter your password:").strip
 list_of_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
-if list_of_users[0][:username] == input_username && list_of_users[0][:password] == input_password
-    if list_of_users[0][:accesslevel] == "Facilitator"
+user = list_of_users.find { |user| user[:username] == input_username}
+if user[:password] == input_password
+    if user[:accesslevel] == "Facilitator"
         loop do
             # Menu for super user
         superuser_menu = prompt.select("Please select what you would like to do from the following options:") do |superusermenu|
@@ -34,15 +34,29 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                 puts "What is the new user's full name?"
                 input_new_user = gets.chomp
                 puts "What username would you like to assign to this user?"
-                input_new_username = gets.chomp.capitalize
+                input_new_username = gets.chomp.capitalize.strip
                 puts "Assign a password for this user:"
-                input_new_password = gets.chomp
+                input_new_password = gets.chomp.strip
+                prompt = TTY::Prompt.new
                 input_is_newuser_superuser = prompt.select("Is this new user a Facilitator or Student?") do |accesslevel|
-                accesslevel.choice 'Facilitator'
-                accesslevel.choice 'Student'
-                File.write('json/users.json', JSON.dump())
-                # Need to be able to write to json file!    
+                    accesslevel.choice 'Facilitator'
+                    accesslevel.choice 'Student'
                 end
+                puts Rainbow("#{input_new_user} has been added to Quizbites").magenta
+                puts Rainbow("Username: #{input_new_username}").pink
+                puts Rainbow("Password: #{input_new_password}").pink
+                newuser = {
+                    fullname: input_new_user,
+                    username: input_new_username,
+                    password: input_new_password,
+                    accesslevel: input_is_newuser_superuser
+                }
+                file = File.open('json/users.json', "r+").read
+                array = JSON.parse(file)
+                array.push(newuser)
+                json = JSON.generate(array)
+                File.write('json/users.json', json)
+                # file.write(json)
             elsif superuser_menu == "View Existing Users"
                 puts Rainbow("The following is a list of the current users:").cyan
                 list_of_users.each do |details|
@@ -80,7 +94,7 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                 exit
             end
         end
-    elsif list_of_users[0][:accesslevel] != "Facilitator"
+    else
     # Menu for student
         loop do
         student_menu = prompt.select("Please select what subject you would like to be quizzed on from the following options:") do |studentmenu|
@@ -100,7 +114,7 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                 exit
             end
         end
-        end
+    end
 else 
     puts Rainbow("Invalid Username and/or Password").red
 end
