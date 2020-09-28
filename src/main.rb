@@ -5,6 +5,7 @@ require 'tty-prompt'
 require 'tty-font'
 require_relative 'classes/userclass'
 require_relative 'classes/quizquestionsclass'
+require_relative 'classes/superuser'
 prompt = TTY::Prompt.new
 font = TTY::Font.new
 pastel = Pastel.new
@@ -14,7 +15,7 @@ pastel = Pastel.new
 puts pastel.bright_magenta(font.write("Welcome to Quiz Bites"))
 puts Rainbow("A place where you can test your skills and expand your mind with multiple choice quizzes!!").cyan
 puts "Please enter your username:"
-input_username = gets.chomp
+input_username = gets.chomp.capitalize
 input_password = prompt.mask("Please enter your password:")
 list_of_users = JSON.parse(File.read("src/users.json"), symbolize_names: true)
 if list_of_users[0][:username] == input_username && list_of_users[0][:password] == input_password
@@ -53,19 +54,25 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                 end
                 puts "In the next steps, you will be asked to enter your quiz question followed by 4 possible answers. You will then be asked to advise which is the correct answer"
                 if input_new_quiz_questions == "English"
-                    new_english_quiz_question = EnglishQuizQuestion.createnewquestion("english")
+                    new_english_quiz_question = EnglishQuizQuestion.createnewquestion("English")
                 elsif input_new_quiz_questions == "Science"
-                    new_science_quiz_question = NewQuizQuestion.createnewquestion("science")
+                    new_science_quiz_question = NewQuizQuestion.createnewquestion("Science")
                 elsif input_new_quiz_questions == "History"
-                    new_history_quiz_question = NewQuizQuestion.createnewquestion("history")
+                    new_history_quiz_question = NewQuizQuestion.createnewquestion("History")
                 end
-                    puts Rainbow("Your question has now been added to the list!").yellow
             elsif superuser_menu == "View Existing Quizzes"
                 existing_quizzes = prompt.select("Select which subject you would like to view from the following:") do |view|
                     view.choice 'English'
                     view.choice 'Science'
                     view.choice 'History'
                 end
+                    if existing_quizzes == "English"
+                        CSV.foreach("english_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
+                    elsif existing_quizzes == "Science"
+                        CSV.foreach("science_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
+                    elsif existing_quizzes == "History"
+                        CSV.foreach("history_quiz_questions.csv", headers: true) { |row| puts "QUESTION: #{row['question']} A: #{row['answer1']} B: #{row['answer2']} C: #{row['answer3']} D: #{row['answer4']} CORRECT ANSWER: #{row['correctanswer']}" }
+                    end
             else superuser_menu == 'Exit Program'
                 puts pastel.cyan(font.write("Thank you!"))
                 exit

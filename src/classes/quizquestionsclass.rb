@@ -23,14 +23,17 @@ class NewQuizQuestion
         puts "Out of the four answers which were provided, please advise the correct answer:"
         @correctanswer = gets.chomp
 
+        if subject == "English"
         new_english_quiz_question = EnglishQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)
         new_english_quiz_question.write_to_file_english
-        
+        elsif subject == "Science"
         new_science_quiz_question = ScienceQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)
         new_science_quiz_question.write_to_file_science
-
+        else subject == "History"
         new_history_quiz_question = HistoryQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)
         new_history_quiz_question.write_to_file_history
+        end
+        puts Rainbow("Your question has now been added to #{subject} quiz list!").yellow
     end
 end
 
