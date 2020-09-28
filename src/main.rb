@@ -17,11 +17,6 @@ puts "Please enter your username:"
 input_username = gets.chomp
 input_password = prompt.mask("Please enter your password:")
 list_of_users = JSON.parse(File.read("src/users.json"), symbolize_names: true)
-list_of_users.each do |user|
-    name_of_user = user[:username]
-    password_of_user = user[:password]
-    access_level_of_user = user[:accesslevel]
-end
 if list_of_users[0][:username] == input_username && list_of_users[0][:password] == input_password
     if list_of_users[0][:accesslevel] == "Facilitator"
         loop do
@@ -46,6 +41,7 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                 # Need to be able to write to file!    
                 end
             elsif superuser_menu == "View Existing Users"
+                puts Rainbow("The following is a list of the current users:").cyan
                 list_of_users.each do |details|
                     puts Rainbow("Fullname: #{details[:fullname].ljust(40, ".")} Username: #{details[:username].ljust(35, ".")} Password: #{details[:password].ljust(30, ".")} Access Level: #{details[:accesslevel]}").blue
                 end
@@ -57,52 +53,19 @@ if list_of_users[0][:username] == input_username && list_of_users[0][:password] 
                 end
                 puts "In the next steps, you will be asked to enter your quiz question followed by 4 possible answers. You will then be asked to advise which is the correct answer"
                 if input_new_quiz_questions == "English"
-                        puts "Enter your new quiz question"
-                        englishnewquizq = gets.chomp
-                        puts "Enter possible answer 1:"
-                        englishans1 = gets.chomp
-                        puts "Enter possible answer 2:"
-                        englishans2 = gets.chomp
-                        puts "Enter possible answer 3:"
-                        englishans3 = gets.chomp
-                        puts "Enter possible answer 4:"
-                        englishans4 = gets.chomp
-                        puts "Out of the four answers which were provided, please advise the correct answer:"
-                        engcorrectanswer = gets.chomp
-                        new_english_quiz_question = EnglishQuizQuestion.new(englishnewquizq, englishans1, englishans2, englishans3, englishans4, engcorrectanswer)
-                        new_english_quiz_question.write_to_file_english
-                    elsif input_new_quiz_questions == "Science"
-                        puts "Enter your new quiz question"
-                        sciencenewquizq = gets.chomp
-                        puts "Enter possible answer 1:"
-                        scienceans1 = gets.chomp
-                        puts "Enter possible answer 2:"
-                        scienceans2 = gets.chomp
-                        puts "Enter possible answer 3:"
-                        scienceans3 = gets.chomp
-                        puts "Enter possible answer 4:"
-                        scienceans4 = gets.chomp
-                        puts "Out of the four answers which were provided, please advise the correct answer:"
-                        scicorrectanswer = gets.chomp
-                        new_science_quiz_question = ScienceQuizQuestion.new(sciencenewquizq, scienceans1, scienceans2, scienceans3, scienceans4, scicorrectanswer)
-                        new_science_quiz_question.write_to_file_science
-                    elsif input_new_quiz_questions == "History"
-                        puts "Enter your new quiz question"
-                        historynewquizq = gets.chomp
-                        puts "Enter possible answer 1:"
-                        historyans1 = gets.chomp
-                        puts "Enter possible answer 2:"
-                        historyans2 = gets.chomp
-                        puts "Enter possible answer 3:"
-                        historyans3 = gets.chomp
-                        puts "Enter possible answer 4:"
-                        historyans4 = gets.chomp
-                        puts "Out of the four answers which were provided, please advise the correct answer:"
-                        histcorrectanswer = gets.chomp
-                        new_history_quiz_question = HistoryQuizQuestion.new(historynewquizq, historyans1, historyans2, historyans3, historyans4, histcorrectanswer)
-                        new_history_quiz_question.write_to_file_history
-                    end
+                    new_english_quiz_question = EnglishQuizQuestion.createnewquestion("english")
+                elsif input_new_quiz_questions == "Science"
+                    new_science_quiz_question = NewQuizQuestion.createnewquestion("science")
+                elsif input_new_quiz_questions == "History"
+                    new_history_quiz_question = NewQuizQuestion.createnewquestion("history")
+                end
                     puts Rainbow("Your question has now been added to the list!").yellow
+            elsif superuser_menu == "View Existing Quizzes"
+                existing_quizzes = prompt.select("Select which subject you would like to view from the following:") do |view|
+                    view.choice 'English'
+                    view.choice 'Science'
+                    view.choice 'History'
+                end
             else superuser_menu == 'Exit Program'
                 puts pastel.cyan(font.write("Thank you!"))
                 exit
@@ -123,3 +86,4 @@ else
     puts Rainbow("Invalid Username and/or Password").red
 end
     
+

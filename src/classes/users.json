@@ -1,0 +1,14 @@
+[
+    {
+        "fullname": "Leanne S",
+        "username": "Leanne",
+        "password": "1",
+        "accesslevel": "Facilitator"
+    },
+    {
+        "fullname": "Leanne Stranks",
+        "username": "Lea",
+        "password": "2",
+        "accesslevel": "Student"
+    }
+]
