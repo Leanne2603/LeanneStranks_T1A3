@@ -54,7 +54,6 @@ if user[:password] == input_password
                 array.push(newuser)
                 json = JSON.generate(array)
                 File.write('json/users.json', json)
-                # file.write(json)
             elsif superuser_menu == "View Existing Users"
                 puts Rainbow("The following is a list of the current users:").cyan
                 list_of_users.each do |details|
@@ -111,28 +110,81 @@ if user[:password] == input_password
                 answer = ""
                 while index < 2 do
                     "Choose which is correct from the following options or type exit to leave the program:"
-                    quiz_question = englishquizlist.sample.values_at(0..4)
-                    puts quiz_question
+                    quiz_question = englishquizlist.sample
+                    output_question = quiz_question.values_at(0..4)
+                    puts output_question
                     answer = gets.chomp
-                    if  answer == englishquizlist.values_at(-1)
+
+                    if  answer == quiz_question[-1]
                         score += 1
                     elsif answer == "exit"
                         puts pastel.cyan(font.write("Thank you!"))                        
                         exit
                     end
+
                     index += 1
                 end
-                puts score
-                # retrieve 1 line of the csv at random
-                # print indexes 0-4
-                # output indexes 0-4 as a list of questions for the user to view
-                # get answer from the user as to what answer they think is correct
-                # if the answer matches what is at index 5, increase score by 1
+
+                result = case score
+                when 0..3 then puts "Room for improvement"
+                when 4..7 then puts "Well done"
+                when 8..10 then puts "Amazing work!"
+                end
                 # once the specified number of questions have been asked - output score along with which answers were incorrect
             elsif student_menu == 'Science'
-                # sciencequiz = 
+                sciencequizlist = CSV.read("csv/science_quiz_questions.csv")
+                index = 0
+                score = 0
+                answer = ""
+                while index < 10 do
+                    "Choose which is correct from the following options or type exit to leave the program:"
+                    quiz_question = sciencequizlist.sample
+                    output_question = quiz_question.values_at(0..4)
+                    puts output_question
+                    answer = gets.chomp
+
+                    if  answer == quiz_question[-1]
+                        score += 1
+                    elsif answer == "exit"
+                        puts pastel.cyan(font.write("Thank you!"))                        
+                        exit
+                    end
+
+                    index += 1
+                end
+
+                result = case score
+                when 0..3 then puts "Room for improvement"
+                when 4..7 then puts "Well done"
+                when 8..10 then puts "Amazing work!"
+                end
             elsif student_menu == 'History'
-                # historyquiz =
+                historyquizlist = CSV.read("csv/history_quiz_questions.csv")
+                index = 0
+                score = 0
+                answer = ""
+                while index < 2 do
+                    "Choose which is correct from the following options or type exit to leave the program:"
+                    quiz_question = historyquizlist.sample
+                    output_question = quiz_question.values_at(0..4)
+                    puts output_question
+                    answer = gets.chomp
+
+                    if  answer == quiz_question[-1]
+                        score += 1
+                    elsif answer == "exit"
+                        puts pastel.cyan(font.write("Thank you!"))                        
+                        exit
+                    end
+
+                    index += 1
+                end
+
+                result = case score
+                when 0..3 then puts "Room for improvement"
+                when 4..7 then puts "Well done"
+                when 8..10 then puts "Amazing work!"
+                end
             else
                 exit
             end
