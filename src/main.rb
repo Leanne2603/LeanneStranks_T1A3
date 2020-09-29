@@ -5,6 +5,7 @@ require 'tty-prompt'
 require 'tty-font'
 require_relative 'classes/userclass'
 require_relative 'classes/quizquestionsclass'
+require_relative 'classes/studentquiz'
 prompt = TTY::Prompt.new
 font = TTY::Font.new
 pastel = Pastel.new
@@ -20,7 +21,7 @@ user = list_of_users.find { |user| user[:username] == input_username}
 if user[:password] == input_password
     if user[:accesslevel] == "Facilitator"
         loop do
-            # Menu for super user
+            # Menu for superuser/facilitator access
             superuser_menu = prompt.select("Please select what you would like to do from the following options:") do |superusermenu|
             superusermenu.choice 'Create New User'
             superusermenu.choice 'View Existing Users'
@@ -95,7 +96,7 @@ if user[:password] == input_password
             end
         end
     else
-    # Menu for student
+    # Menu for student access
         loop do
         student_menu = prompt.select("Please select what subject you would like to be quizzed on from the following options:") do |studentmenu|
             studentmenu.choice 'English'
@@ -104,86 +105,11 @@ if user[:password] == input_password
             studentmenu.choice 'Exit Program'
             end
             if student_menu == 'English'
-                englishquizlist = CSV.read("csv/english_quiz_questions.csv")
-                index = 0
-                score = 0
-                answer = ""
-                while index < 10 do
-                    "Choose which is correct from the following options or type exit to leave the program:"
-                    quiz_question = englishquizlist.sample
-                    output_question = quiz_question.values_at(0..4)
-                    puts output_question
-                    answer = gets.chomp
-
-                    if  answer == quiz_question[-1]
-                        score += 1
-                        index += 1
-                    elsif answer == "exit"
-                        puts pastel.cyan(font.write("Thank you!"))                        
-                        exit
-                    end
-
-                end
-                result = case score
-                when 0..3 then puts "Your score was #{score}. There is room for improvement"
-                when 4..7 then puts "Your score was #{score}. Well done"
-                when 8..10 then puts "Your score was #{score}. Amazing work!"
-                end
-                # once the specified number of questions have been asked - output score along with which answers were incorrect
+                run_quiz("English")
             elsif student_menu == 'Science'
-                sciencequizlist = CSV.read("csv/science_quiz_questions.csv")
-                index = 0
-                score = 0
-                answer = ""
-                while index < 10 do
-                    "Choose which is correct from the following options or type exit to leave the program:"
-                    quiz_question = sciencequizlist.sample
-                    output_question = quiz_question.values_at(0..4)
-                    puts output_question
-                    answer = gets.chomp
-
-                    if  answer == quiz_question[-1]
-                        score += 1
-                    elsif answer == "exit"
-                        puts pastel.cyan(font.write("Thank you!"))                        
-                        exit
-                    end
-
-                    index += 1
-                end
-
-                result = case score
-                when 0..3 then puts "Your score was #{score}. There is room for improvement"
-                when 4..7 then puts "Your score was #{score}. Well done"
-                when 8..10 then puts "Your score was #{score}. Amazing work!"
-                end
+                run_quiz("Science")
             elsif student_menu == 'History'
-                historyquizlist = CSV.read("csv/history_quiz_questions.csv")
-                index = 0
-                score = 0
-                answer = ""
-                while index < 2 do
-                    "Choose which is correct from the following options or type exit to leave the program:"
-                    quiz_question = historyquizlist.sample
-                    output_question = quiz_question.values_at(0..4)
-                    puts output_question
-                    answer = gets.chomp
-
-                    if  answer == quiz_question[-1]
-                        score += 1
-                    elsif answer == "exit"
-                        puts pastel.cyan(font.write("Thank you!"))                        
-                        exit
-                    end
-
-                    index += 1
-                end
-
-                result = case score
-                when 0..3 then puts "Your score was #{score}. There is room for improvement"
-                when 4..7 then puts "Your score was #{score}. Well done"
-                when 8..10 then puts "Your score was #{score}. Amazing work!"
-                end
+                run_quiz("History")
             else
                 exit
             end
