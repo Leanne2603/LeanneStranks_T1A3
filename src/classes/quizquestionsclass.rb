@@ -1,27 +1,27 @@
 class NewQuizQuestion
     attr_accessor :question, :answer1, :answer2, :answer3, :answer4, :correctanswer
-    def initialize(question, answer1, answer2, answer3, answer4, correctanswer)
-        @question = question
-        @answer1 = answer1
-        @answer2 = answer2
-        @answer3 = answer3
-        @answer4 = answer4
-        @correctanswer = correctanswer
+    def initialize
+        @question = ""
+        @answer1 = ""
+        @answer2 = ""
+        @answer3 = ""
+        @answer4 = ""
+        @correctanswer = ""
     end
 
     def createnewquestion(subject)
         puts "Enter your new quiz question"
-        @question = gets.chomp
+        self.question = gets.chomp
         puts "Enter possible answer 1:"
-        @answer1 = gets.chomp
+        self.answer1 = gets.chomp
         puts "Enter possible answer 2:"
-        @answer2 = gets.chomp
+        self.answer2 = gets.chomp
         puts "Enter possible answer 3:"
-        @answer3 = gets.chomp
+        self.answer3 = gets.chomp
         puts "Enter possible answer 4:"
-        @answer4 = gets.chomp
+        self.answer4 = gets.chomp
         puts "Out of the four answers which were provided, please advise the correct answer:"
-        @correctanswer = gets.chomp
+        self.correctanswer = gets.chomp
 
         if subject == "English"
         new_english_quiz_question = EnglishQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)
@@ -38,6 +38,14 @@ class NewQuizQuestion
 end
 
 class EnglishQuizQuestion < NewQuizQuestion
+    def initialize(question,answer1,answer2,answer3,answer4,correctanswer)
+        @question = question
+        @answer1 = answer1
+        @answer2 = answer2
+        @answer3 = answer3
+        @answer4 = answer4
+        @correctanswer = correctanswer
+    end
     
     def write_to_file_english
         File.write("csv/english_quiz_questions.csv", "#{question},#{answer1},#{answer2},#{answer3},#{answer4},#{correctanswer}\n", mode: "a")
@@ -45,12 +53,28 @@ class EnglishQuizQuestion < NewQuizQuestion
 end
 
 class ScienceQuizQuestion < NewQuizQuestion
+    def initialize(question,answer1,answer2,answer3,answer4,correctanswer)
+        @question = question
+        @answer1 = answer1
+        @answer2 = answer2
+        @answer3 = answer3
+        @answer4 = answer4
+        @correctanswer = correctanswer
+    end
     def write_to_file_science
         File.write("csv/science_quiz_questions.csv", "#{question},#{answer1},#{answer2},#{answer3},#{answer4},#{correctanswer}\n", mode: "a")
     end
 end
 
 class HistoryQuizQuestion < NewQuizQuestion
+    def initialize(question,answer1,answer2,answer3,answer4,correctanswer)
+        @question = question
+        @answer1 = answer1
+        @answer2 = answer2
+        @answer3 = answer3
+        @answer4 = answer4
+        @correctanswer = correctanswer
+    end
     def write_to_file_history
         File.write("csv/history_quiz_questions.csv", "#{question},#{answer1},#{answer2},#{answer3},#{answer4},#{correctanswer}\n", mode: "a")
     end

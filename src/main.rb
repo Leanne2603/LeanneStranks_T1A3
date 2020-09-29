@@ -68,13 +68,13 @@ if user[:password] == input_password
                 end
                 puts "In the next steps, you will be asked to enter your quiz question followed by 4 possible answers. You will then be asked to advise which is the correct answer"
                 if input_new_quiz_questions == "English"
-                    new_english_quiz_question = EnglishQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)
+                    new_english_quiz_question = NewQuizQuestion.new()
                     new_english_quiz_question.createnewquestion("English")
                 elsif input_new_quiz_questions == "Science"
-                    new_science_quiz_question = NewQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)
+                    new_science_quiz_question = NewQuizQuestion.new()
                     new_science_quiz_question.createnewquestion("Science")
                 else 
-                    new_history_quiz_question = NewQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)
+                    new_history_quiz_question = NewQuizQuestion.new()
                     new_history_quiz_question.createnewquestion("History")
                 end
             elsif superuser_menu == "View Existing Quizzes"
@@ -106,22 +106,29 @@ if user[:password] == input_password
             end
             if student_menu == 'English'
                 englishquizlist = CSV.read("csv/english_quiz_questions.csv")
-                newenglishquizquestionlist = englishquizlist
                 index = 0
-                # score = 0
+                score = 0
                 answer = ""
                 while index < 2 do
                     "Choose which is correct from the following options or type exit to leave the program:"
-                    puts englishquizlist.sample.values_at(0..4)
+                    quiz_question = englishquizlist.sample.values_at(0..4)
+                    puts quiz_question
                     answer = gets.chomp
-                    if answer == "exit"
+                    if  answer == englishquizlist.values_at(-1)
+                        score += 1
+                    elsif answer == "exit"
                         puts pastel.cyan(font.write("Thank you!"))                        
                         exit
                     end
-                    # score += 1
                     index += 1
                 end
-
+                puts score
+                # retrieve 1 line of the csv at random
+                # print indexes 0-4
+                # output indexes 0-4 as a list of questions for the user to view
+                # get answer from the user as to what answer they think is correct
+                # if the answer matches what is at index 5, increase score by 1
+                # once the specified number of questions have been asked - output score along with which answers were incorrect
             elsif student_menu == 'Science'
                 # sciencequiz = 
             elsif student_menu == 'History'
