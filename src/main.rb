@@ -6,7 +6,6 @@ require 'tty-font'
 require 'smarter_csv'
 require_relative 'classes/userclass'
 require_relative 'classes/quizquestionsclass'
-require_relative 'classes/superuser'
 prompt = TTY::Prompt.new
 font = TTY::Font.new
 pastel = Pastel.new
@@ -23,7 +22,7 @@ if user[:password] == input_password
     if user[:accesslevel] == "Facilitator"
         loop do
             # Menu for super user
-        superuser_menu = prompt.select("Please select what you would like to do from the following options:") do |superusermenu|
+            superuser_menu = prompt.select("Please select what you would like to do from the following options:") do |superusermenu|
             superusermenu.choice 'Create New User'
             superusermenu.choice 'View Existing Users'
             superusermenu.choice 'Create New Questions' 
@@ -91,7 +90,7 @@ if user[:password] == input_password
                     else 
                         CSV.foreach("csv/history_quiz_questions.csv", headers: true) {|row| puts "Question: #{row['question']}\n a: #{row['answer1']}\n b: #{row['answer2']}\n c: #{row['answer3']}\n d: #{row['answer4']}\n Correct Answer: #{row['correctanswer']}"}
                     end
-            else superuser_menu == 'Exit Program'
+            else
                 puts pastel.cyan(font.write("Thank you!"))
                 exit
             end
@@ -106,13 +105,28 @@ if user[:password] == input_password
             studentmenu.choice 'Exit Program'
             end
             if student_menu == 'English'
-                englishquiz = SmarterCSV.process('csv/english_quiz_questions.csv')
-                englishquiz.each { |key, value| puts "#{key} #{value.to_s}" }
+                englishquizlist = CSV.read("csv/english_quiz_questions.csv")
+                newenglishquizquestionlist = englishquizlist
+                index = 0
+                # score = 0
+                answer = ""
+                while index < 2 do
+                    "Choose which is correct from the following options or type exit to leave the program:"
+                    puts englishquizlist.sample.values_at(0..4)
+                    answer = gets.chomp
+                    if answer == "exit"
+                        puts pastel.cyan(font.write("Thank you!"))                        
+                        exit
+                    end
+                    # score += 1
+                    index += 1
+                end
+
             elsif student_menu == 'Science'
-                sciencequiz = SmarterCSV.process('csv/science_quiz_questions.csv')
+                # sciencequiz = 
             elsif student_menu == 'History'
-                historyquiz = SmarterCSV.process('csv/history_quiz_questions.csv')
-            else student_menu == 'Exit Program'
+                # historyquiz =
+            else
                 exit
             end
         end
