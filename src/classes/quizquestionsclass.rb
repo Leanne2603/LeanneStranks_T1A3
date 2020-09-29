@@ -33,6 +33,7 @@ class NewQuizQuestion
         new_history_quiz_question = HistoryQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)
         new_history_quiz_question.write_to_file_history
         end
+        system("clear")
         puts Rainbow("Your question has now been added to #{subject} quiz list!").yellow
     end
 end

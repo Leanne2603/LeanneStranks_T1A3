@@ -3,7 +3,6 @@ require 'csv'
 require 'json'
 require 'tty-prompt'
 require 'tty-font'
-require 'smarter_csv'
 require_relative 'classes/userclass'
 require_relative 'classes/quizquestionsclass'
 prompt = TTY::Prompt.new
@@ -40,6 +39,7 @@ if user[:password] == input_password
                     accesslevel.choice 'Facilitator'
                     accesslevel.choice 'Student'
                 end
+                system("clear")
                 puts Rainbow("#{input_new_user} has been added to Quizbites").magenta
                 puts Rainbow("Username: #{input_new_username}").pink
                 puts Rainbow("Password: #{input_new_password}").pink
@@ -108,7 +108,7 @@ if user[:password] == input_password
                 index = 0
                 score = 0
                 answer = ""
-                while index < 2 do
+                while index < 10 do
                     "Choose which is correct from the following options or type exit to leave the program:"
                     quiz_question = englishquizlist.sample
                     output_question = quiz_question.values_at(0..4)
@@ -117,18 +117,17 @@ if user[:password] == input_password
 
                     if  answer == quiz_question[-1]
                         score += 1
+                        index += 1
                     elsif answer == "exit"
                         puts pastel.cyan(font.write("Thank you!"))                        
                         exit
                     end
 
-                    index += 1
                 end
-
                 result = case score
-                when 0..3 then puts "Room for improvement"
-                when 4..7 then puts "Well done"
-                when 8..10 then puts "Amazing work!"
+                when 0..3 then puts "Your score was #{score}. There is room for improvement"
+                when 4..7 then puts "Your score was #{score}. Well done"
+                when 8..10 then puts "Your score was #{score}. Amazing work!"
                 end
                 # once the specified number of questions have been asked - output score along with which answers were incorrect
             elsif student_menu == 'Science'
@@ -154,9 +153,9 @@ if user[:password] == input_password
                 end
 
                 result = case score
-                when 0..3 then puts "Room for improvement"
-                when 4..7 then puts "Well done"
-                when 8..10 then puts "Amazing work!"
+                when 0..3 then puts "Your score was #{score}. There is room for improvement"
+                when 4..7 then puts "Your score was #{score}. Well done"
+                when 8..10 then puts "Your score was #{score}. Amazing work!"
                 end
             elsif student_menu == 'History'
                 historyquizlist = CSV.read("csv/history_quiz_questions.csv")
@@ -181,9 +180,9 @@ if user[:password] == input_password
                 end
 
                 result = case score
-                when 0..3 then puts "Room for improvement"
-                when 4..7 then puts "Well done"
-                when 8..10 then puts "Amazing work!"
+                when 0..3 then puts "Your score was #{score}. There is room for improvement"
+                when 4..7 then puts "Your score was #{score}. Well done"
+                when 8..10 then puts "Your score was #{score}. Amazing work!"
                 end
             else
                 exit
