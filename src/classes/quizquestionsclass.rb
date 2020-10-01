@@ -11,17 +11,17 @@ class NewQuizQuestion
 
     def createnewquestion(subject)
         puts "Enter your new quiz question"
-        self.question = gets.chomp
+        self.question = gets.chomp.gsub(/,/, ";")
         puts "Enter possible answer 1:"
-        self.answer1 = gets.chomp
+        self.answer1 = gets.chomp.gsub(/,/, ";")
         puts "Enter possible answer 2:"
-        self.answer2 = gets.chomp
+        self.answer2 = gets.chomp.gsub(/,/, ";")
         puts "Enter possible answer 3:"
-        self.answer3 = gets.chomp
+        self.answer3 = gets.chomp.gsub(/,/, ";")
         puts "Enter possible answer 4:"
-        self.answer4 = gets.chomp
+        self.answer4 = gets.chomp.gsub(/,/, ";")
         puts "Out of the four answers which were provided, please advise the correct answer:"
-        self.correctanswer = gets.chomp
+        self.correctanswer = gets.chomp.gsub(/,/, ";")
 
         if subject == "English"
         new_english_quiz_question = EnglishQuizQuestion.new(@question, @answer1, @answer2, @answer3, @answer4, @correctanswer)

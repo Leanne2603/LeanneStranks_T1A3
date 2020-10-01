@@ -1,5 +1,6 @@
 # runs the quiz for the student user
 def run_quiz(subject)
+    begin
     pastel = Pastel.new
     font = TTY::Font.new
 
@@ -30,10 +31,13 @@ def run_quiz(subject)
         end
 
     end
-
+    system("clear")
     result = case score
-    when 0..3 then puts "Your score was #{score}/10. There is room for improvement"
-    when 4..7 then puts "Your score was #{score}/10. Well done"
-    when 8..10 then puts "Your score was #{score}/10. Amazing work!"
+    when 0..3 then puts Rainbow("Your score was #{score}/10. There is room for improvement").pink
+    when 4..7 then puts Rainbow("Your score was #{score}/10. Well done").pink
+    when 8..10 then puts Rainbow("Your score was #{score}/10. Amazing work!").pink
     end
+rescue
+    puts Rainbow("An error has occured, please try again or contact your facilitator").red
+end
 end
