@@ -27,7 +27,7 @@ if main == "Login"
                 superusermenu.choice 'View Existing Quizzes' 
                 superusermenu.choice 'Exit Program' 
             end
-
+            # did not use create_new_account method for this as different access is required
             if superuser_menu == "Create New User"
                 puts "What is the new user's full name?"
                 input_new_user = gets.chomp
@@ -94,6 +94,7 @@ if main == "Login"
                 logout()
             end
         end
+        #menu for student access
     else access == "Student"
         loop do
             student_menu = prompt.select("Please select what subject you would like to be quizzed on from the following options:") do |studentmenu|
