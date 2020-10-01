@@ -3,9 +3,9 @@ require 'csv'
 require 'json'
 require 'tty-prompt'
 require 'tty-font'
-require_relative 'classes/userclass'
 require_relative 'classes/quizquestionsclass'
-require_relative 'classes/studentquiz'
+require_relative 'studentquiz'
+require_relative 'loginaccountmanagement'
 prompt = TTY::Prompt.new
 font = TTY::Font.new
 pastel = Pastel.new
@@ -13,22 +13,21 @@ pastel = Pastel.new
 # Login authentication
 puts pastel.bright_magenta(font.write("Welcome to Quiz Bites"))
 puts Rainbow("A place where you can test your skills and expand your mind with multiple choice quizzes!!").cyan
-puts "Please enter your username:"
-input_username = gets.chomp.capitalize.strip
-input_password = prompt.mask("Please enter your password:").strip
-list_of_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
-user = list_of_users.find { |user| user[:username] == input_username}
-if user[:password] == input_password
-    if user[:accesslevel] == "Facilitator"
+loop do
+main = main_menu()
+if main == "Login"
+    access = login()
+    if access == "Facilitator"
         loop do
             # Menu for superuser/facilitator access
             superuser_menu = prompt.select("Please select what you would like to do from the following options:") do |superusermenu|
-            superusermenu.choice 'Create New User'
-            superusermenu.choice 'View Existing Users'
-            superusermenu.choice 'Create New Questions' 
-            superusermenu.choice 'View Existing Quizzes' 
-            superusermenu.choice 'Exit Program' 
+                superusermenu.choice 'Create New User'
+                superusermenu.choice 'View Existing Users'
+                superusermenu.choice 'Create New Questions' 
+                superusermenu.choice 'View Existing Quizzes' 
+                superusermenu.choice 'Exit Program' 
             end
+
             if superuser_menu == "Create New User"
                 puts "What is the new user's full name?"
                 input_new_user = gets.chomp
@@ -57,7 +56,8 @@ if user[:password] == input_password
                 File.write('json/users.json', json)
             elsif superuser_menu == "View Existing Users"
                 puts Rainbow("The following is a list of the current users:").cyan
-                list_of_users.each do |details|
+                view_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
+                view_users.each do |details|
                     puts Rainbow("Fullname: #{details[:fullname].ljust(40, ".")} Username: #{details[:username].ljust(35, ".")} Password: #{details[:password].ljust(30, ".")} Access Level: #{details[:accesslevel]}").blue
                 end
             elsif superuser_menu == "Create New Questions"
@@ -95,28 +95,28 @@ if user[:password] == input_password
                 exit
             end
         end
-    else
-    # Menu for student access
+    else access == "Student"
         loop do
-        student_menu = prompt.select("Please select what subject you would like to be quizzed on from the following options:") do |studentmenu|
-            studentmenu.choice 'English'
-            studentmenu.choice 'Science'
-            studentmenu.choice 'History'
-            studentmenu.choice 'Exit Program'
+            student_menu = prompt.select("Please select what subject you would like to be quizzed on from the following options:") do |studentmenu|
+                studentmenu.choice 'English'
+                studentmenu.choice 'Science'
+                studentmenu.choice 'History'
+                studentmenu.choice 'Exit Program'
+                end
+                if student_menu == 'English'
+                    run_quiz("English")
+                elsif student_menu == 'Science'
+                    run_quiz("Science")
+                elsif student_menu == 'History'
+                    run_quiz("History")
+                else
+                    exit
+                end
             end
-            if student_menu == 'English'
-                run_quiz("English")
-            elsif student_menu == 'Science'
-                run_quiz("Science")
-            elsif student_menu == 'History'
-                run_quiz("History")
-            else
-                exit
-            end
-        end
     end
-else 
-    puts Rainbow("Invalid Username and/or Password").red
+else
+    new_account = create_new_account()
+end
 end
 
     

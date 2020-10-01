@@ -1,5 +1,7 @@
 # runs the quiz for the student user
 def run_quiz(subject)
+    pastel = Pastel.new
+    font = TTY::Font.new
 
     if subject == "English"
         quizlist = CSV.read("csv/english_quiz_questions.csv")
@@ -13,7 +15,7 @@ def run_quiz(subject)
     score = 0
     answer = ""
     while index < 10 do
-        "Choose which is correct from the following options or type exit to leave the program:"
+        puts "Choose which is correct from the following options or type exit to leave the program:"
         quiz_question = quizlist.sample
         output_question = quiz_question.values_at(0..4)
         puts output_question
@@ -30,8 +32,8 @@ def run_quiz(subject)
     end
 
     result = case score
-    when 0..3 then puts "Your score was #{score}. There is room for improvement"
-    when 4..7 then puts "Your score was #{score}. Well done"
-    when 8..10 then puts "Your score was #{score}. Amazing work!"
+    when 0..3 then puts "Your score was #{score}/10. There is room for improvement"
+    when 4..7 then puts "Your score was #{score}/10. Well done"
+    when 8..10 then puts "Your score was #{score}/10. Amazing work!"
     end
 end
