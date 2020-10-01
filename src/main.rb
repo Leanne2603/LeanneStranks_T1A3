@@ -91,8 +91,7 @@ if main == "Login"
                         CSV.foreach("csv/history_quiz_questions.csv", headers: true) {|row| puts "Question: #{row['question']}\n a: #{row['answer1']}\n b: #{row['answer2']}\n c: #{row['answer3']}\n d: #{row['answer4']}\n Correct Answer: #{row['correctanswer']}"}
                     end
             else
-                puts pastel.cyan(font.write("Thank you!"))
-                exit
+                logout()
             end
         end
     else access == "Student"
@@ -110,7 +109,7 @@ if main == "Login"
                 elsif student_menu == 'History'
                     run_quiz("History")
                 else
-                    exit
+                    logout()
                 end
             end
     end

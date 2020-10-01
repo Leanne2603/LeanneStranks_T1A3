@@ -34,8 +34,11 @@ def login
     prompt = TTY::Prompt.new
     userpassword = false
     until userpassword
-        puts "Please enter your username:"
+        puts "Please enter your username or type exit to leave the program:"
         input_username = gets.chomp.capitalize.strip
+        if input_username == "Exit"
+            logout()
+        end
         input_password = prompt.mask("Please enter your password:").strip
         list_of_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
         user = list_of_users.find { |user| user[:username] == input_username}
@@ -47,7 +50,14 @@ def login
                 userpassword
                 return "Student"
             else
-                puts "Your password is invalid, please try again"
+                puts Rainbow("Your password is invalid, please try again").red
             end
     end
+end
+
+def logout
+    pastel = Pastel.new
+    font = TTY::Font.new
+    puts pastel.cyan(font.write("Thank you!"))  
+    exit  
 end
