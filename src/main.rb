@@ -4,8 +4,8 @@ require 'json'
 require 'tty-prompt'
 require 'tty-font'
 require_relative 'classes/quizquestionsclass'
-require_relative 'studentquiz'
-require_relative 'loginaccountmanagement'
+require_relative 'methods/studentquiz'
+require_relative 'methods/loginaccountmanagement'
 prompt = TTY::Prompt.new
 font = TTY::Font.new
 pastel = Pastel.new
