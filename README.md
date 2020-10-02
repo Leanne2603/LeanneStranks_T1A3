@@ -1,6 +1,34 @@
-## Program Installation
-To install and run the application from the terminal, run the following command in your terminal:
+## Help Documentation
+*Note: This program has previously been tested on Ubuntu only*  
+
+### Installation Guide
+1. This program is dependent on having Ruby installed. If you are unsure if you have Ruby, you will need to open your command prompt and type ruby -v. If you are presented with a 
+version number which is either equivalent or above 2.2.2, type gem --version into your command line. If you do not receive an error, congratulations, you have Ruby installed and can continue on to the next step, otherwise, you will need to install Ruby prior to running the program.
+2. Once you have confirmed you have Ruby installed, enter the following command into your terminal:
+```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/Leanne2603/LeanneStranks_T1A3/master/src/run_program.sh)"
+```
+
+This should:
+- Clone the file from Github
+- Change into the directory required
+- Install required gems
+- Open the program
+
+### Dependencies
+If for any reason, the installation fails and does not work as expected - the below is what is required to run the program:
+#### Github Repository
+The Github repository can be cloned and accessed here: https://github.com/Leanne2603/LeanneStranks_T1A3
+#### Ruby environment 2.7.0
+Refer to step 1 of the installation guide.
+#### Gem "rainbow", "~> 3.0"
+No reported issues - You can install the gem by entering the following into your terminal: gem install rainbow
+#### Gem "tty-prompt", "~> 0.22.0"
+Whilst this gem is supported on: Linux, OS X, FreeBSD and Windows systems, you will experience a better result on a Unix-like platform. 
+If using Windows - consider installing ConEmu, cmder or PowerCmd
+To install, enter the following into your terminal: gem install tty-prompt
+#### Gem "tty-font", "~> 0.5.0"
+No reported issues - To install, enter the following into your terminal: gem install tty-font
 
 
 ## Link to Source Control Repository
@@ -46,25 +74,4 @@ The student will log into the application and be presented with a menu of a list
 
 *> Your checklists for each feature should have at least 5 items.*
 
-## Help Documentation
-<!-- System designed and tested on a Windows PC -->
-### Installation Guide
-1. This program is dependent on having Ruby installed. If you are unsure if you have Ruby, you will need to open your command prompt and type ruby -v. If you are presented with a 
-version number which is either equivalent or aboe 2.2.2, type gem --version. If you do not receive an error, congratulations, you have Ruby install and can continue on to the next step.
-2. 
-
-
-###### ruby environment 2.7.0
-###### gem "rainbow", "~> 3.0"
-###### gem "tty-prompt", "~> 0.22.0"
-Linux, OS X, FreeBSD and Windows systems
-###### gem "tty-font", "~> 0.5.0"
-###### gem "colorize", "~> 0.8.1"
-
-
-
-*You must include:*
-*- steps to install the application*
-*- any dependencies required by the application to operate*
-*- any system/hardware requirements*
 

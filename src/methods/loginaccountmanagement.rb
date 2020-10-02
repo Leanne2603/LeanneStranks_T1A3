@@ -61,10 +61,11 @@ def login
         if input_username == "Exit"
             logout()
         end
-        input_password = prompt.mask("Please enter your password:").strip
         list_of_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
+        input_password = prompt.mask("Please enter your password:").strip
         user = list_of_users.find { |user| user[:username] == input_username}
             system("clear")
+            begin
             if user[:accesslevel] == "Facilitator" && user[:password] == input_password
                 userpassword = true
                 return "Facilitator"
@@ -72,8 +73,11 @@ def login
                 userpassword
                 return "Student"
             else
-                puts Rainbow("Your password is invalid, please try again").red
+                puts Rainbow("Your password is invalid, please try again or type exit to leave the program").red
             end
+        rescue
+            puts Rainbow("You seem to have entered an invalid username! Try again").red
+        end
     end
 end
 

@@ -1,4 +1,5 @@
 require 'rainbow'
+require 'colorize'
 require 'csv'
 require 'json'
 require 'tty-prompt'
