@@ -29,31 +29,7 @@ if main == "Login"
             end
             # did not use create_new_account method for this as different access is required
             if superuser_menu == "Create New User"
-                puts "What is the new user's full name?"
-                input_new_user = gets.chomp
-                puts "What username would you like to assign to this user?"
-                input_new_username = gets.chomp.capitalize.strip
-                puts "Assign a password for this user:"
-                input_new_password = gets.chomp.strip
-                input_is_newuser_superuser = prompt.select("Is this new user a Facilitator or Student?") do |accesslevel|
-                    accesslevel.choice 'Facilitator'
-                    accesslevel.choice 'Student'
-                end
-                system("clear")
-                puts Rainbow("#{input_new_user} has been added to Quizbites").magenta
-                puts Rainbow("Username: #{input_new_username}").pink
-                puts Rainbow("Password: #{input_new_password}").pink
-                newuser = {
-                    fullname: input_new_user,
-                    username: input_new_username,
-                    password: input_new_password,
-                    accesslevel: input_is_newuser_superuser
-                }
-                file = File.open('json/users.json', "r+").read
-                array = JSON.parse(file)
-                array.push(newuser)
-                json = JSON.generate(array)
-                File.write('json/users.json', json)
+                create_new_account("Superuser")
             elsif superuser_menu == "View Existing Users"
                 puts Rainbow("The following is a list of the current users:").cyan
                 view_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
@@ -115,7 +91,7 @@ if main == "Login"
             end
     end
 else
-    new_account = create_new_account()
+    new_account = create_new_account("Student")
 end
 end
 
