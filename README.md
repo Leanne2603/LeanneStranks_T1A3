@@ -29,7 +29,10 @@ If using Windows - consider installing ConEmu, cmder or PowerCmd
 To install, enter the following into your terminal: gem install tty-prompt
 #### Gem "tty-font", "~> 0.5.0"
 No reported issues - To install, enter the following into your terminal: gem install tty-font
-
+#### Gem json
+This should be a pre-installed gem
+#### Gem csv
+This should be a pre-installed gem
 
 ## Link to Source Control Repository
 https://github.com/Leanne2603/LeanneStranks_T1A3.git

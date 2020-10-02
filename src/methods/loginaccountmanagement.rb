@@ -80,7 +80,7 @@ def login
                 puts Rainbow("Your password is invalid, please try again").red
             end
         rescue
-            puts Rainbow("You seem to have entered an invalid username! Try again or type CREATE to create a new account").red
+            no_username()
         end
     end
 end
@@ -90,4 +90,20 @@ def logout
     font = TTY::Font.new
     puts pastel.cyan(font.write("Thank you!"))  
     exit  
+end
+
+def no_username
+    prompt = TTY::Prompt.new
+    choice = prompt.select("You seem to have entered an invalid username, please choose what you would like to do from the following:") do |choose|
+        choose.choice 'Try again'
+        choose.choice 'Create'
+        choose.choice 'Exit'
+    end
+        if choice == 'Try again'
+            puts "Please try again"
+        elsif choice == "Create"
+            create_new_account("Student")
+        else
+            logout()
+        end
 end
