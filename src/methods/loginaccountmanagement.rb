@@ -56,16 +56,20 @@ def login
     prompt = TTY::Prompt.new
     userpassword = false
     until userpassword
-        puts "Please enter your username or type exit to leave the program:"
+        puts "Please enter your username or type EXIT to leave the program:"
         input_username = gets.chomp.capitalize.strip
         if input_username == "Exit"
             logout()
+        elsif input_username == "Create"
+            create_new_account("Student")
+            puts "Please enter your username:"
+            input_username = gets.chomp.capitalize.strip
         end
         list_of_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
         input_password = prompt.mask("Please enter your password:").strip
         user = list_of_users.find { |user| user[:username] == input_username}
             system("clear")
-            begin
+        begin
             if user[:accesslevel] == "Facilitator" && user[:password] == input_password
                 userpassword = true
                 return "Facilitator"
@@ -73,10 +77,10 @@ def login
                 userpassword
                 return "Student"
             else
-                puts Rainbow("Your password is invalid, please try again or type exit to leave the program").red
+                puts Rainbow("Your password is invalid, please try again").red
             end
         rescue
-            puts Rainbow("You seem to have entered an invalid username! Try again").red
+            puts Rainbow("You seem to have entered an invalid username! Try again or type CREATE to create a new account").red
         end
     end
 end
