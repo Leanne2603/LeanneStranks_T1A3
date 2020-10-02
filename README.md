@@ -4,7 +4,7 @@
 ### Installation Guide
 1. This program is dependent on having Ruby installed. If you are unsure if you have Ruby, you will need to open your command prompt and type ruby -v. If you are presented with a 
 version number which is either equivalent or above 2.2.2, type gem --version into your command line. If you do not receive an error, congratulations, you have Ruby installed and can continue on to the next step, otherwise, you will need to install Ruby prior to running the program.
-2. Once you have confirmed you have Ruby installed, enter the following command into your terminal:
+2. Once you have confirmed you have Ruby installed, enter the following command into your terminal (note: if you are using a Windows terminal - the below command will not work and you will not be able to execute the program):
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/Leanne2603/LeanneStranks_T1A3/master/src/run_program.sh)"
 ```
@@ -26,7 +26,7 @@ No reported issues - You can install the gem by entering the following into your
 #### Gem "tty-prompt", "~> 0.22.0"
 Whilst this gem is supported on: Linux, OS X, FreeBSD and Windows systems, you will experience a better result on a Unix-like platform. 
 If using Windows - consider installing ConEmu, cmder or PowerCmd
-To install, enter the following into your terminal: gem install tty-prompt
+To install the tty-prompt gem, enter the following into your terminal: gem install tty-prompt
 #### Gem "tty-font", "~> 0.5.0"
 No reported issues - To install, enter the following into your terminal: gem install tty-font
 #### Gem json
@@ -77,4 +77,40 @@ The student will log into the application and be presented with a menu of a list
 
 *> Your checklists for each feature should have at least 5 items.*
 
+## Test Scripts
 
+### **Test 1**
+
+**Scenario:** User has attempted to log in using an unknown username 
+
+**What is being tested:** If the user can create a new account and successfully log in with the lower permission applied 
+
+**Desired outcome:** User can create new account and log in using new credentials and is only able to see quizzes available to complete 
+
+| Step  | What is being tested?  | Expected outcome?   | Actual outcome  | Pass/Fail  |
+|---|---|---|---|---|
+| 1 | Initial screen  | Welcome screen with options to ‘login, create new account, exit program’ displayed   | Welcome screen displayed   |  Pass |
+| 2 | Login with unknown username  |  Error message displayed showing unknown username with options to ‘try again, create new account or exit program’  | Error message displays with menu to ‘try again, create or exit’   |  Pass |
+| 3 | Create new account  | Able to create new account successfully   | Account successfully created   |  Pass |
+| 4 | Login  | Able to log in with new credentials   | Logged in successfully with new credentials   | Pass  |
+| 5 | Menu displayed  | Only quiz menu displayed   | Menu displayed correct based on permissions   | Pass  |
+| 6 | Open quiz  | Quiz will display when subject is selected | Quiz displayed correctly | Pass  |
+| 7 | Complete quiz  | Score is outputted when quiz completed | Score calculates and is output to screen | Pass  |  
+
+
+### **Test 2**
+
+**Scenario:** The facilitator who has superuser access is wanting to log on and create a new quiz question for the Science quiz.
+
+**What is being tested:** Superuser/Facilitator is able to log in and create a new quiz question 
+
+**Desired outcome:** User will be able to create a new question and receive a message to advise it has been successfully added and then be able to view the new question in the quiz list
+
+| Step  | What is being tested?  | Expected outcome?   | Actual outcome  | Pass/Fail  |
+|---|---|---|---|---|
+| 1 | Superuser Login | Login successfully and presented with menu which includes creating a new quiz question | Menu displayed with superuser options  |  Pass  |
+| 2 | Options displayed | Superuser is able to select from a menu of subjects | Subject menu is displayed  | Pass  |
+| 3 | Input | Superuser is asked to enter a question, followed by 4 options and the correct answer | System asked for input to enter question and answers | Pass |
+| 4 | Output | User is advised that question has been added to the ‘subject’ quiz list and main menu is displayed | Message and main menu displayed | Pass |
+| 5 | View question | The new question which was just added will be displayed in the list when ‘view existing quizzes’ is selected and main menu is displayed | New question displayed in list and main menu displayed | Pass |
+| 6 | Exit | User can exit program using ‘exit program’ option and message is displayed | Program exited with message | Pass |
