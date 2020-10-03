@@ -1,5 +1,4 @@
 ## Help Documentation
-*Note: This program has previously been tested on Ubuntu only*  
 
 ### Installation Guide
 1. This program is dependent on having Ruby installed. If you are unsure if you have Ruby, you will need to open your command prompt and type ruby -v. If you are presented with a 
@@ -29,6 +28,8 @@ If using Windows - consider installing ConEmu, cmder or PowerCmd
 To install the tty-prompt gem, enter the following into your terminal: gem install tty-prompt
 #### Gem "tty-font", "~> 0.5.0"
 No reported issues - To install, enter the following into your terminal: gem install tty-font
+#### "picture_frame", "~> 0.0.4"
+No reported issues. You can install the gem by entering the following into your terminal: gem install picture_frame
 #### json
 This should be pre-installed
 #### csv

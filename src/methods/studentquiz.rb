@@ -1,5 +1,6 @@
 # runs the quiz for the student user
 def run_quiz(subject)
+    f = PictureFrame.create(:stars)
     begin
     pastel = Pastel.new
     font = TTY::Font.new
@@ -16,7 +17,7 @@ def run_quiz(subject)
     score = 0
     answer = ""
     while index < 10 do
-        puts "Choose which is correct from the following options or type exit to leave the program:"
+        puts f.frame("Choose which is correct from the following options or type exit to leave the program:")
         quiz_question = quizlist.sample
         output_question = quiz_question.values_at(0..4)
         puts output_question

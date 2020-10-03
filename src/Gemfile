@@ -17,3 +17,5 @@ gem "tty-font", "~> 0.5.0"
 gem "colorize", "~> 0.8.1"
 
 gem "smarter_csv", "~> 1.2"
+
+gem "picture_frame", "~> 0.0.4"

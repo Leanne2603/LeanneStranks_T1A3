@@ -1,3 +1,5 @@
+require_relative 'filehandling'
+
 def main_menu
     prompt = TTY::Prompt.new
     pastel = Pastel.new
@@ -87,10 +89,12 @@ def login
             puts "Please enter your username:"
             input_username = gets.chomp.capitalize.strip
         end
+        
         list_of_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
         input_password = prompt.mask("Please enter your password:").strip
         user = list_of_users.find { |user| user[:username] == input_username}
-            system("clear")
+        system("clear")
+
         begin
             if user[:accesslevel] == "Facilitator" && user[:password] == input_password
                 userpassword = true
@@ -133,3 +137,4 @@ def no_username
             logout()
         end
 end
+
