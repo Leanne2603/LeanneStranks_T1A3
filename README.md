@@ -29,13 +29,15 @@ If using Windows - consider installing ConEmu, cmder or PowerCmd
 To install the tty-prompt gem, enter the following into your terminal: gem install tty-prompt
 #### Gem "tty-font", "~> 0.5.0"
 No reported issues - To install, enter the following into your terminal: gem install tty-font
-#### Gem json
-This should be a pre-installed gem
-#### Gem csv
-This should be a pre-installed gem
+#### json
+This should be pre-installed
+#### csv
+This should be pre-installed
 
 ## Link to Source Control Repository
 https://github.com/Leanne2603/LeanneStranks_T1A3.git
+
+![Github](docs/Leanne2603_Github.png)
 
 ## Scope and Statement of Purpose
 
@@ -65,9 +67,11 @@ The student will log into the application and be presented with a menu of a list
 
 ![Control Flow Diagram](docs/FlowChartDiagram.png)
 
-Invite link to view: (https://trello.com/invite/b/4QOjEAmJ/c12c652f02e93852c24637c8a720a154/quiz-bites-application)
+Invite link to view Trello: (https://trello.com/invite/b/4QOjEAmJ/c12c652f02e93852c24637c8a720a154/quiz-bites-application)
 
 (https://trello.com/b/4QOjEAmJ/quiz-bites-application)
+
+![Trellow](docs/Trello.png)
 
 *- outlines how each feature will be implemented and a checklist of tasks for each feature*
 *- prioritise the implementation of different features, or checklist items within a feature*

@@ -13,6 +13,7 @@ end
 def create_new_account(access)
     prompt = TTY::Prompt.new
     require "json"
+
     if  access == "Superuser"
         puts "What is the new user's full name?"
         input_new_user = gets.chomp
@@ -36,20 +37,41 @@ def create_new_account(access)
         system("clear")
     end
 
-    puts Rainbow("Your details have been added to Quizbites").magenta
-    puts Rainbow("Username: #{input_new_username}").pink
-    puts Rainbow("Password: #{input_new_password}").pink
-    newuser = {
+    begin
+        newuser = {
         fullname: input_new_user,
         username: input_new_username,
         password: input_new_password,
         accesslevel: input_is_newuser_superuser
-    }
-    file = File.open('json/users.json', "r+").read
-    array = JSON.parse(file)
-    array.push(newuser)
-    json = JSON.generate(array)
-    File.write('json/users.json', json)
+        }
+        check_existing_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
+        found = false
+        check_existing_users.each { |user| user[:username]
+        if  user[:username] == input_new_username
+        found = true
+        end
+        }
+
+        if found
+            system("clear") 
+            puts Rainbow("The username you have selected already exists, please try again").red
+        return 
+            create_new_account("Student")
+        end
+
+        puts Rainbow("Your details have been added to Quizbites").magenta
+        puts Rainbow("Username: #{input_new_username}").pink
+        puts Rainbow("Password: #{input_new_password}").pink
+
+        file = File.open('json/users.json', "r+").read
+        array = JSON.parse(file)
+        array.push(newuser)
+        json = JSON.generate(array)
+        File.write('json/users.json', json)
+    rescue
+    # QB01 error: JSON file can not be located in specified path
+    file_not_found("json")
+    end
 end
 
 def login
