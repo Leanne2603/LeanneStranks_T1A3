@@ -90,10 +90,13 @@ def login
             input_username = gets.chomp.capitalize.strip
         end
         
-        list_of_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
-        input_password = prompt.mask("Please enter your password:").strip
+        begin
+            list_of_users = JSON.parse(File.read("json/users.json"), symbolize_names: true)
+            input_password = prompt.mask("Please enter your password:").strip
+        rescue
+            file_not_found("json")
+        end
         user = list_of_users.find { |user| user[:username] == input_username}
-        system("clear")
 
         begin
             if user[:accesslevel] == "Facilitator" && user[:password] == input_password
@@ -112,7 +115,6 @@ def login
 end
 
 def logout
-    system("clear")
     pastel = Pastel.new
     font = TTY::Font.new
     puts pastel.cyan(font.write("Thank you!"))  

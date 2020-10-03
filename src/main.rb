@@ -51,6 +51,7 @@ loop do
                         newq.choice 'History'
                     end
                     puts f.frame("In the next steps, you will be asked to enter your quiz question followed by 4 possible answers. You will then be asked to advise which is the correct answer")
+                    
                     if input_new_quiz_questions == "English"
                         createnewquestion("English")
                     elsif input_new_quiz_questions == "Science"
@@ -58,12 +59,14 @@ loop do
                     else 
                         createnewquestion("History")
                     end
+
                 elsif superuser_menu == "View Existing Quizzes"
-                    existing_quizzes = prompt.select("Select which subject you would like to view from the following:") do |view|
+                        system("clear")
+                        existing_quizzes = prompt.select("Select which subject you would like to view from the following:") do |view|
                         view.choice 'English'
                         view.choice 'Science'
                         view.choice 'History'
-                    end
+                        end
                     begin
                         if existing_quizzes == "English"
                             CSV.foreach("csv/english_quiz_questions.csv", headers: true) {|row| puts "Question: #{row['question']}\n a: #{row['answer1']}\n b: #{row['answer2']}\n c: #{row['answer3']}\n d: #{row['answer4']}\n Correct Answer: #{row['correctanswer']}"}
@@ -88,6 +91,7 @@ loop do
                     studentmenu.choice 'History'
                     studentmenu.choice 'Exit Program'
                     end
+                    
                     if student_menu == 'English'
                         run_quiz("English")
                     elsif student_menu == 'Science'
