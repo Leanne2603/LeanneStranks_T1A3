@@ -44,7 +44,7 @@ https://github.com/Leanne2603/LeanneStranks_T1A3.git
 
 The purpose of this application is to allow students to practice multiple choice quiz questions in relation to their subject of study. It allows the facilitator to upload a series of questions to file and the students can log in and access these questions via a quiz which provides a random output.
 
-It will allow assist students with practicing for tests and prepare them for when it comes to the graded exams. The students will be able to access this quiz in their own time and assist them with retaining the information as they will be able to access the quiz as often as they wish. I am developing this application as I like the idea of being able to help people achieve their goals in education. Education is a very important and creating an application that can assist a student improve their knowledge would be rewarding to me.
+It will allow assist students with practicing for tests and prepare them for when it comes to the graded exams. The students will be able to access this quiz in their own time and assist them with retaining the information as they will be able to access the quiz as often as they wish. I am developing this application as I like the idea of being able to help people achieve their goals in education. Education is a very important and creating an application that can assist a student improve their knowledge would be a rewarding accomplishment.
 
 The target audience for this application would be facilitators and students. The facilitator would manage their own class and have the capability of adding new facilitators if required. Students will also have the ability to sign up on their own accord. As this is an educational tool, the initial stages will be just to answer the quiz questions and see how well they are progressing, therefore; there is currently no issues of security issues as no information is stored. The login has been created to account for future any development which will include storing the student's quiz results/creating goals and a more personalised feel.
 
@@ -68,19 +68,25 @@ The student will log into the application and be presented with a menu of a list
 
 ![Control Flow Diagram](docs/FlowChartDiagram.png)
 
+## Implementation Plan
+
 Invite link to view Trello: (https://trello.com/invite/b/4QOjEAmJ/c12c652f02e93852c24637c8a720a154/quiz-bites-application)
 
 (https://trello.com/b/4QOjEAmJ/quiz-bites-application)
 
-![Trellow](docs/Trello.png)
+![Trello](docs/Trello.png)
+
+### Main Priorities
+- A working superuser menu where the user can create and view
+- A working student menu where the student can complete the quiz and a score is output to the screen
+- Login authenticator
+
+### Challenges
+
 
 *- outlines how each feature will be implemented and a checklist of tasks for each feature*
 *- prioritise the implementation of different features, or checklist items within a feature*
 *- provide a deadline, duration or other time indicator for each feature or checklist/checklist-item*
-
-*Utilise a suitable project management platform to track this implementation plan*
-
-*> Your checklists for each feature should have at least 5 items.*
 
 ## Test Scripts
 

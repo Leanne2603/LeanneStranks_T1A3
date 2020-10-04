@@ -8,6 +8,7 @@ require_relative 'methods/newquizquestion'
 require_relative 'methods/studentquiz'
 require_relative 'methods/loginaccountmanagement'
 require_relative 'methods/filehandling'
+require_relative 'argv'
 prompt = TTY::Prompt.new
 font = TTY::Font.new
 pastel = Pastel.new
@@ -91,7 +92,7 @@ loop do
                     studentmenu.choice 'History'
                     studentmenu.choice 'Exit Program'
                     end
-                    
+
                     if student_menu == 'English'
                         run_quiz("English")
                     elsif student_menu == 'Science'
