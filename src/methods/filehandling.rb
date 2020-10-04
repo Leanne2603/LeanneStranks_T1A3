@@ -4,7 +4,7 @@ def file_not_found(filetype)
     font = TTY::Font.new
     if filetype == "json"
         # QB01 error: JSON file can not be located in specified path
-        puts pastel.red(font.write("ERROR!")) 
+        puts pastel.red(font.write("ERROR!"))
         puts Rainbow("****** There is an error with loading the program, please contact your administrator! ******").yellow
         puts "Error: QB01"
         logout()

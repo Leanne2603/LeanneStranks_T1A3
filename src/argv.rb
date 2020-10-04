@@ -2,12 +2,12 @@ if ARGV[0] == "-h" || ARGV[0] == "--help"
     puts Rainbow("This application is designed to help students with their study to gain knowledge and expand their mind").gray
     puts Rainbow("To demo a Superuser login you can use the following login credentials:").green
     puts Rainbow("Username: Superuser").blue
-    puts Rainbow("Password: password123").blue    
+    puts Rainbow("Password: password123").blue
     puts Rainbow("or").red
-    puts Rainbow("to demo a Student login:").blue  
-    puts Rainbow("Username: Student").blue  
-    puts Rainbow("Password: password123").blue 
-    puts Rainbow("For more information about the developer, enter about into your terminal")
+    puts Rainbow("to demo a Student login:").blue
+    puts Rainbow("Username: Student").blue
+    puts Rainbow("Password: password123").blue
+    puts Rainbow("For more information about the developer, enter: ruby main.rb about into your terminal").green
 end
 
 if ARGV[0] == "about"

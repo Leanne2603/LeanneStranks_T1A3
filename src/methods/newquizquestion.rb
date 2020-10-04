@@ -10,7 +10,7 @@ def createnewquestion(subject)
     puts "Enter possible answer 4:"
     answer4 = gets.chomp.gsub(/,/, ";")
     puts "Out of the four answers which were provided, please advise the correct answer:"
-    correctanswer = gets.chomp.gsub(/,/, ";")
+    correctanswer = gets.chomp.downcase.gsub(/,/, ";")
 
     if subject == "English"
         File.write("csv/english_quiz_questions.csv", "#{question},#{answer1},#{answer2},#{answer3},#{answer4},#{correctanswer}\n", mode: "a")

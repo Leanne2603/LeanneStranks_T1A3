@@ -117,8 +117,8 @@ end
 def logout
     pastel = Pastel.new
     font = TTY::Font.new
-    puts pastel.cyan(font.write("Thank you!"))  
-    exit  
+    puts pastel.cyan(font.write("Thank you!"))
+    exit
 end
 
 def no_username
@@ -128,15 +128,14 @@ def no_username
     puts pastel.bright_red(font.write("OOPS!"))
     choice = prompt.select("You seem to have entered an invalid username, please choose what you would like to do from the following:") do |choose|
         choose.choice 'Try again'
-        choose.choice 'Create'
+        choose.choice 'Create an account'
         choose.choice 'Exit'
     end
         if choice == 'Try again'
             puts "Please try again"
-        elsif choice == "Create"
+        elsif choice == "Create an account"
             create_new_account("Student")
         else
             logout()
         end
 end
-
